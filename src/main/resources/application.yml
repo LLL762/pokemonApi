@@ -18,13 +18,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-        ddl-auto: update
+        ddl-auto: create
         format_sql: true
         highlight_sql: true
-        hb2ddl:
+        hbm2ddl:
           import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+      javax.persistence.sql-load-script-source: /sql-scripts/insert-pkm.sql
     show-sql: true
-
+    defer-datasource-initialization: true
 
 
 

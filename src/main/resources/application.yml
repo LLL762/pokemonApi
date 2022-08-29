@@ -1,0 +1,32 @@
+spring:
+  output:
+    ansi:
+      #enable color for console log
+      enabled: ALWAYS
+  datasource:
+    driverClassName: org.h2.Driver
+    password: ''
+    url: jdbc:h2:mem:to-name;DB_CLOSE_DELAY=-1
+    username: user
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    #true : spring doesn't close hibernate session until request is dealt with
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        ddl-auto: update
+        format_sql: true
+        highlight_sql: true
+        hb2ddl:
+          import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+    show-sql: true
+
+
+
+
+
+

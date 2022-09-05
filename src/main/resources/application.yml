@@ -13,7 +13,7 @@ spring:
       enabled: true
       path: /h2-console
   jpa:
-    #true : spring doesn't close hibernate session until request is dealt with
+    #if true : spring doesn't close hibernate session until request is dealt with
     open-in-view: false
     properties:
       hibernate:
@@ -26,8 +26,11 @@ spring:
       javax.persistence.sql-load-script-source: /sql-scripts/insert-pkm.sql
     show-sql: true
     defer-datasource-initialization: true
-
-
+  data:
+    web:
+      pageable:
+        default-page-size: 20
+        max-page-size: 150
 
 
 

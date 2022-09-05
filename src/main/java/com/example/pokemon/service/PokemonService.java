@@ -16,5 +16,13 @@ public interface PokemonService {
 
     Optional<Pokemon> findPkmByNumber(int number);
 
+    Optional<Pokemon> findPkmById(Long id);
+
+    Pokemon updatePkm(Pokemon pokemon);
+
+    Pokemon createPkm(Pokemon pokemon);
+
+    boolean deletePkmById(Long id);
+
 
 }

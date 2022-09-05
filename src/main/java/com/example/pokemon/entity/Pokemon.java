@@ -1,15 +1,18 @@
 package com.example.pokemon.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
@@ -18,6 +21,9 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Getter
 @Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Pokemon {
 
     @Id
@@ -34,10 +40,12 @@ public class Pokemon {
     private String name;
 
     @Min(value = 0, message = "Must be positive")
-    private float heightInMeter;
+    @Digits(integer = 5, fraction = 2)
+    private BigDecimal heightInMeter;
 
     @Min(value = 0, message = "Must be positive")
-    private float weightInKg;
+    @Digits(integer = 3, fraction = 3)
+    private BigDecimal weightInKg;
 
     @URL
     private String imageUrl;
@@ -46,7 +54,9 @@ public class Pokemon {
     private LocalDateTime lastEdit;
 
     @OneToMany(fetch = LAZY, mappedBy = "pokemon")
-    private Set<PkmDetails> pkmDetails;
+    @JsonIgnore
+    @ToString.Exclude
+    private Set<PkmDetails> pkmDetails = new HashSet<>();
 
 
 }

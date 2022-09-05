@@ -2,6 +2,7 @@ package com.example.pokemon.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Getter
 @Setter
+@ToString
 public class PkmType {
 
     @Id
@@ -38,6 +40,7 @@ public class PkmType {
     @Basic(fetch = LAZY)
     @Lob
     @Size(max = 2000, message = "Less than {max}")
+    @ToString.Exclude
     private String description;
 
 
@@ -47,6 +50,7 @@ public class PkmType {
             joinColumns = @JoinColumn(name = "type_id"),
             inverseJoinColumns = @JoinColumn(name = "weakness_id")
     )
+    @ToString.Exclude
     private Set<PkmType> weakness = new HashSet<>();
 
     @ManyToMany(fetch = LAZY)
@@ -55,6 +59,7 @@ public class PkmType {
             joinColumns = @JoinColumn(name = "type_id"),
             inverseJoinColumns = @JoinColumn(name = "resist_id")
     )
+    @ToString.Exclude
     private Set<PkmType> resist = new HashSet<>();
 
 

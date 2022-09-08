@@ -1,19 +1,22 @@
 package com.example.pokemon.controller.resource;
 
+import com.example.pokemon.config.PageConfig;
 import com.example.pokemon.entity.Pokemon;
 import com.example.pokemon.model.RestResponse;
 import com.example.pokemon.model.dto.PokemonDTO;
 import com.example.pokemon.model.dto.PokemonDTOMapper;
 import com.example.pokemon.service.PokemonService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.servlet.LocaleResolver;
 
 import javax.validation.Valid;
-import javax.validation.Validator;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -31,19 +34,25 @@ public class PkmResource {
 
     private final PokemonDTOMapper pkmDTOMapper;
     private final PokemonService pkmService;
+    private final PageConfig pageConfig;
 
-    private final Validator javaxValidator;
+    private final MessageSource messageSource;
+
+    private final LocaleResolver localeResolver;
 
 
     @GetMapping("/all")
     public ResponseEntity<RestResponse> getAllPokemons(
-            @RequestParam @Positive final int page,
-            @RequestParam(required = false) @Positive final Integer nbPkm,
+            final @RequestParam @Positive int page,
+            final @RequestParam(name = "nb", required = false) @Positive Integer pkmPerpage,
+            final @RequestParam(name = "lang", required = false) String language,
             final ServletWebRequest request
     ) {
+        
 
         final int pageIndex = page - 1; // Page index starts at 0.
-        final Page<Pokemon> pkmPage = pkmService.listAll(nbPkm != null ? nbPkm : 25, pageIndex);
+        final Page<Pokemon> pkmPage = pkmService.listAll(pkmPerpage != null ? pkmPerpage : pageConfig.getDefaultPageSize(), pageIndex);
+
 
         final Map<String, ?> data = Map.of(
                 POKEMON_LIST, pkmDTOMapper.toDTO(pkmPage.getContent()),
@@ -51,8 +60,9 @@ public class PkmResource {
                 MAX_PAGE, pkmPage.getTotalPages()
         );
 
+
         return ResponseEntity.ok(
-                defaultRestResponse("pokemon", OK, request, data));
+                defaultRestResponse(messageSource.getMessage("resource.pokemon.all", null, LocaleContextHolder.getLocale()), OK, request, data));
     }
 
     @PostMapping

@@ -25,6 +25,7 @@ public record PokemonDTO(
         BigDecimal heightInMeter,
 
         @Digits(integer = 3, fraction = 3)
+        @Min(0)
         BigDecimal weightInKg,
 
         @URL

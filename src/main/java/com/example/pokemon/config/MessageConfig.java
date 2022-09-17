@@ -42,7 +42,6 @@ public class MessageConfig implements WebMvcConfigurer {
         return messageSource;
     }
 
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());

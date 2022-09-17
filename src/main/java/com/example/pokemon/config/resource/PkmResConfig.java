@@ -20,4 +20,6 @@ public final class PkmResConfig {
         private MsgSrcConfig() {
         }
     }
+
+
 }

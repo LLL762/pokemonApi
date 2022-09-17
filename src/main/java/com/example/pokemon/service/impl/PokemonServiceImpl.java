@@ -40,6 +40,7 @@ public class PokemonServiceImpl implements PokemonService {
 
         log.info("Fetching pokemon nb {}", number);
 
+
         return pkmRepo.findByNumber(number);
     }
 

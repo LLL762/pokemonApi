@@ -91,6 +91,7 @@ public class PkmResource {
                 MsgSrcConfig.GET_BY_ID_OK,
                 new Object[]{pkmRetrieved.name(), pkmRetrieved.id()},
                 LocaleContextHolder.getLocale());
+ 
 
         return ResponseEntity.ok(defaultRestResponse(message, OK, request, Map.of(POKEMON, pkmRetrieved)));
     }

@@ -6,5 +6,11 @@ INSERT INTO pokemon  (number, name, height_in_meter, weight_in_kg, image_url, cr
 ;
 
 
+INSERT INTO language (iso_639_1,name) VALUES ('en','English'), ('fr','Français');
+
+
+INSERT INTO localized_pkm (language_iso_639_1,pokemon_id,name) VALUES ('fr',1,'Bulbizarre');
+INSERT INTO localized_pkm (language_iso_639_1,pokemon_id,name) VALUES ('en',1,'Bulbasaur');
+
 
 

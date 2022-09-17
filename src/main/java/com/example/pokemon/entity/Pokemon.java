@@ -12,7 +12,9 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
@@ -57,6 +59,24 @@ public class Pokemon {
     @JsonIgnore
     @ToString.Exclude
     private Set<PkmDetails> pkmDetails = new HashSet<>();
+
+    @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL, orphanRemoval = true) //Bi-directional
+    @MapKey(name = "id.langId")
+    @ToString.Exclude
+    private Map<String, LocalizedPkm> localizedPkms = new HashMap<>();
+
+
+    public void addLocalizedPkm(final LocalizedPkm localizedPkm) {
+
+        this.localizedPkms.put(localizedPkm.getId().getLangId(), localizedPkm);
+        localizedPkm.setPokemon(this);
+    }
+
+    public void removeLocalizedPkm(final LocalizedPkm localizedPkm) {
+
+        this.localizedPkms.remove(localizedPkm.getId().getLangId());
+        localizedPkm.setPokemon(null);
+    }
 
 
 }

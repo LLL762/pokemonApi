@@ -2,6 +2,7 @@ package com.example.pokemon.entity;
 
 
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 
 @Embeddable
 @Getter
+@Setter
 public class LocalizedPkmPk implements Serializable {
 
     @Serial

@@ -57,6 +57,7 @@ public class PkmResource {
                 MAX_PAGE, pkmPage.getTotalPages()
         );
 
+
         message = messageSource.getMessage(MsgSrcConfig.ALL_OK, new Object[]{pkmRetrieved.size()}, LocaleContextHolder.getLocale());
         return ResponseEntity.ok(defaultRestResponse(message, OK, request, data));
     }
@@ -91,7 +92,7 @@ public class PkmResource {
                 MsgSrcConfig.GET_BY_ID_OK,
                 new Object[]{pkmRetrieved.name(), pkmRetrieved.id()},
                 LocaleContextHolder.getLocale());
- 
+
 
         return ResponseEntity.ok(defaultRestResponse(message, OK, request, Map.of(POKEMON, pkmRetrieved)));
     }

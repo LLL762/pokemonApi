@@ -22,6 +22,7 @@ public interface PokemonService {
 
     Pokemon createPkm(Pokemon pokemon);
 
+
     boolean deletePkmById(Long id);
 
 

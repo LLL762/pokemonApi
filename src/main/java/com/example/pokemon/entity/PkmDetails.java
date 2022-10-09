@@ -20,10 +20,11 @@ import static javax.persistence.FetchType.LAZY;
 public class PkmDetails {
 
     @EmbeddedId
-    private PkmDetailsPK pk;
+    private PkmDetailsPK id;
 
     @Type(type = "json")
-    @Column(columnDefinition = "json", nullable = false)
+    @Column(columnDefinition = "json")
+    @Basic(fetch = LAZY)
     private Map<String, String> pkmStats = new HashMap<>();
 
     @ManyToOne(fetch = LAZY)
@@ -38,6 +39,7 @@ public class PkmDetails {
     @JoinColumn(name = "type_id", nullable = false)
     @Length(min = 1, max = 3, message = "{min} types minimum and {max} maximum")
     private Set<PkmType> pkmTypes = new HashSet<>();
+
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "evolution_from_id")

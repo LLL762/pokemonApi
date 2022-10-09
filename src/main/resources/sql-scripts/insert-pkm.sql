@@ -12,5 +12,15 @@ INSERT INTO language (iso_639_1,name) VALUES ('en','English'), ('fr','Français'
 INSERT INTO localized_pkm (language_iso_639_1,pokemon_id,name) VALUES ('fr',1,'Bulbizarre');
 INSERT INTO localized_pkm (language_iso_639_1,pokemon_id,name) VALUES ('en',1,'Bulbasaur');
 
+INSERT INTO generation (number) VALUES (1), (2);
 
+INSERT INTO pkm_type (id, color_hex) VALUES (1,'000000'), (2,'000000');
+
+INSERT INTO localized_pkm_type (pkm_type_id, language_iso_639_1, name) VALUES
+(1,'en', 'poison'), (2,'en', 'grass');
+
+INSERT INTO pkm_details (pokemon_id, generation_number) VALUES (1,1), (1,2);
+
+INSERT INTO pkm_details_pkm_types (pkm_details_generation_number, pkm_details_pokemon_id,
+ pkm_types_id ) VALUES (1,1,1), (1,1,2);
 

@@ -10,22 +10,20 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @Setter
-@NamedEntityGraph(name = "LocalizedPkm.pokemon",
-        attributeNodes = @NamedAttributeNode("pokemon")
-)
-public class LocalizedPkm {
+public class LocalizedGeneration {
 
     @EmbeddedId
-    private LocalizedPkmPk id;
+    private LocalizedGenerationPk id;
 
-    private String name;
-
-    @MapsId("pkmId")
-    @ManyToOne(fetch = LAZY) //Bi-directional
-    private Pokemon pokemon;
+    @MapsId("generationId")
+    @ManyToOne(fetch = LAZY)
+    private Generation generation;
 
     @MapsId("langId")
     @ManyToOne(fetch = LAZY)
     private Language language;
 
+
+    @Column(unique = true, nullable = false)
+    private String displayName;
 }

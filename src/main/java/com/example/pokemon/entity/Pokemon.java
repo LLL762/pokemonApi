@@ -1,6 +1,5 @@
 package com.example.pokemon.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
@@ -13,9 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -56,11 +53,11 @@ public class Pokemon {
     private LocalDateTime lastEdit;
 
     @OneToMany(fetch = LAZY, mappedBy = "pokemon")
-    @JsonIgnore
+    @MapKey(name = "id.generationId")
     @ToString.Exclude
-    private Set<PkmDetails> pkmDetails = new HashSet<>();
+    private Map<Long, PkmDetails> pkmDetails = new HashMap<>();
 
-    @OneToMany(mappedBy = "pokemon", cascade = CascadeType.ALL, orphanRemoval = true) //Bi-directional
+    @OneToMany(fetch = LAZY, mappedBy = "pokemon", cascade = CascadeType.ALL, orphanRemoval = true) //Bi-directional
     @MapKey(name = "id.langId")
     @ToString.Exclude
     private Map<String, LocalizedPkm> localizedPkms = new HashMap<>();
@@ -71,6 +68,7 @@ public class Pokemon {
         this.localizedPkms.put(localizedPkm.getId().getLangId(), localizedPkm);
         localizedPkm.setPokemon(this);
     }
+
 
     public void removeLocalizedPkm(final LocalizedPkm localizedPkm) {
 

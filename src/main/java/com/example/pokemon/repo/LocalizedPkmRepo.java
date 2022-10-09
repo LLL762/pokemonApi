@@ -24,7 +24,6 @@ public interface LocalizedPkmRepo extends JpaRepository<LocalizedPkm, LocalizedP
     @EntityGraph(value = "LocalizedPkm.pokemon")
     Optional<LocalizedPkm> findByIdPkmIdAndIdLangIdIgnoreCase(Long pkmId, String langId);
 
-
     @Query(GET_BY_PK_IGNORE_CASE)
     @QueryHints(value = {@QueryHint(name = READ_ONLY_HINT, value = "true")})
     @EntityGraph(value = "LocalizedPkm.pokemon")
@@ -36,5 +35,6 @@ public interface LocalizedPkmRepo extends JpaRepository<LocalizedPkm, LocalizedP
     Collection<LocalizedPkm> getByPkFetchPkmFallBack(@Param(PARAM_PKM_ID) Long pkmId,
                                                      @Param(PARAM_LANG_ID) String langId,
                                                      @Param(PARAM_FALL_BACK_LANG_ID) String fbLangId);
+
 
 }

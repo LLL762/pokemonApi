@@ -16,13 +16,10 @@ import java.util.Map;
 public class Generation {
 
     @Id
-    private Integer number;
-
-    @Column(unique = true, nullable = false)
-    private String displayName;
+    private Long number;
 
     @Type(type = "json")
-    @Column(columnDefinition = "json", nullable = false)
+    @Column(columnDefinition = "json")
     private Map<String, String> pkmStatsSchema = new HashMap<>();
 
 }

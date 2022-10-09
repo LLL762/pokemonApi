@@ -6,10 +6,10 @@ import lombok.ToString;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
@@ -23,25 +23,21 @@ public class PkmType {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(unique = true, nullable = false)
-    @NotEmpty(message = "Name is required")
-    @Size(min = 1, max = 50, message = "At least {min} and less than {max}")
-    private String name;
 
     @Column(nullable = false)
-    @Pattern(regexp = "^#[0-9a-f]{8}$")
+    @Pattern(regexp = "^#[0-9a-f]{6}$")
     private int colorHex;
 
     @URL
     private String iconUrl;
 
-    @Basic(fetch = LAZY)
-    @Lob
-    @Size(max = 2000, message = "Less than {max}")
+
+    @OneToMany(mappedBy = "pkmType", cascade = CascadeType.ALL, orphanRemoval = true) //Bi-directional
+    @MapKey(name = "id.langId")
     @ToString.Exclude
-    private String description;
+    private Map<String, LocalizedPkmType> localizedPkmTypes = new HashMap<>();
 
 
     @ManyToMany(fetch = LAZY)

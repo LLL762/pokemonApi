@@ -25,13 +25,19 @@ public final class LocalizedPkmJPQL {
 
 
     public static final String GET_PKM_DETAILS = "" +
-            "SELECT pkm, localPkm, pkmDetails  FROM Pokemon pkm, LocalizedPkm localPkm, PkmDetails pkmDetails" +
-            " LEFT JOIN FETCH pkmDetails.pkmTypes" +
+            "SELECT DISTINCT pkmDetails" +
+            " FROM PkmDetails pkmDetails" +
+            " LEFT JOIN FETCH pkmDetails.pokemon pkm" +
+            " LEFT JOIN FETCH pkm.localizedPkms localPkm" +
+            " LEFT JOIN FETCH pkmDetails.pkmTypes pkmTypes" +
+            " LEFT JOIN FETCH pkmTypes.localizedPkmTypes localPkmType" +
             " WHERE pkmDetails.id.generationId = :" + PARAM_GEN_NUM +
             " AND pkmDetails.id.pkmId =:" + PARAM_PKM_ID +
             " AND pkm.id = :" + PARAM_PKM_ID +
             " AND localPkm.id.langId = lower(:" + PARAM_LANG_ID + ") " +
-            " AND localPkm.id.pkmId = :" + PARAM_PKM_ID;
+            " AND localPkm.id.pkmId = :" + PARAM_PKM_ID +
+            " AND localPkmType.id.langId = :" + PARAM_LANG_ID +
+            " AND localPkmType.id.typeId IN pkmTypes";
 
 
     private LocalizedPkmJPQL() {

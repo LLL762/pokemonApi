@@ -1,6 +1,7 @@
 package com.example.pokemon.repo;
 
 import com.example.pokemon.entity.LocalizedPkm;
+import com.example.pokemon.entity.PkmDetails;
 import com.example.pokemon.entity.Pokemon;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -37,9 +38,9 @@ public interface PokemonRepo extends JpaRepository<Pokemon, Long>, JpaSpecificat
 
 
     @Query(GET_PKM_DETAILS)
-    List<Object[]> getInfos(@Param(PARAM_PKM_ID) Long pkmId,
-                            @Param(PARAM_GEN_NUM) Long genNum,
-                            @Param(PARAM_LANG_ID) String langId);
+    public List<PkmDetails> getInfos(@Param(PARAM_PKM_ID) final Long pkmId,
+                                     @Param(PARAM_GEN_NUM) final Long genNum,
+                                     @Param(PARAM_LANG_ID) final String langId);
 
 
     Optional<Pokemon> findByNumber(int number);

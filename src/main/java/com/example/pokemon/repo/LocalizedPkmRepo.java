@@ -13,7 +13,7 @@ import javax.persistence.QueryHint;
 import java.util.Collection;
 import java.util.Optional;
 
-import static com.example.pokemon.repo.LocalizedPkmJPQL.*;
+import static com.example.pokemon.repo.jqpl.LocalizedPkmJPQL.*;
 
 
 @Repository

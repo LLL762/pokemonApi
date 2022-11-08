@@ -17,33 +17,16 @@ class PokemonRepoTest {
     @Autowired
     private PokemonRepo pokemonRepo;
 
+    @Autowired
+    private LocalizedPkmDetailsRepo detailsLocalRepo;
 
-    @Test
-    void test() {
-
-//        final PkmDetails pkmInfos = pokemonRepo.getInfos(1L, 1L, "en").get();
-//
-//        Set<PkmType> pkmTypes = pkmInfos.getPkmTypes();
-//
-//        for (PkmType type : pkmTypes) {
-//            for (LocalizedPkmType localType : type.getLocalizedPkmTypes().values()) {
-//
-//                System.out.println(localType.getName());
-//            }
-//        }
-//
-//        for (LocalizedPkm localPkm : pkmInfos.getPokemon().getLocalizedPkms().values()) {
-//
-//            System.out.println(localPkm.getName());
-//
-//        }
-
-    }
 
     @Test
     void test2() {
+        final String[] lang = {"en"};
 
-        final List<PkmDetails> pkmInfo = pokemonRepo.getInfos(1L, 1L, "en");
+        final List<PkmDetails> pkmInfo = pokemonRepo.getInfos(1L, 1L, lang);
+
 
         System.out.println(pkmInfo.size());
         PkmDetails pkmInfos = pkmInfo.get(0);

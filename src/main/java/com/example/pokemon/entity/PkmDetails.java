@@ -1,9 +1,10 @@
 package com.example.pokemon.entity;
 
 
+import com.example.pokemon.model.AppJsonView;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -20,15 +21,12 @@ import static javax.persistence.FetchType.LAZY;
 public class PkmDetails {
 
     @EmbeddedId
+    @JsonView(AppJsonView.projection.class)
     private PkmDetailsPK id;
-
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
-    @Basic(fetch = LAZY)
-    private Map<String, String> pkmStats = new HashMap<>();
 
     @ManyToOne(fetch = LAZY)
     @MapsId("generationId")
+    @JsonView(AppJsonView.projection.class)
     private Generation generation;
 
     @ManyToOne(fetch = LAZY)
@@ -40,10 +38,9 @@ public class PkmDetails {
     @Length(min = 1, max = 3, message = "{min} types minimum and {max} maximum")
     private Set<PkmType> pkmTypes = new HashSet<>();
 
-
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "evolution_from_id")
-    private Pokemon evolutionFrom;
+    @OneToMany(fetch = LAZY, mappedBy = "pkmDetails", cascade = CascadeType.ALL, orphanRemoval = true)
+    @MapKey(name = "id.langId")
+    private Map<String, LocalizedPkmDetails> pkmDetailsLocals = new HashMap<>();
 
 
 }

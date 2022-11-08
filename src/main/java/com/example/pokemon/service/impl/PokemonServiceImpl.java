@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.example.pokemon.repo.PokemonRepo.hasLang;
-import static org.springframework.data.jpa.domain.Specification.where;
 
 /**
  * 29/08/2022.
@@ -74,13 +72,5 @@ public class PokemonServiceImpl implements PokemonService {
         return false;
     }
 
-
-    public Optional<Pokemon> getPkmInfos(Long pkmId, String langIso) {
-        final Optional<Pokemon> pkmInfos = pkmRepo.findOne(where(hasLang(langIso)));
-
-       
-        return pkmInfos;
-
-    }
 
 }

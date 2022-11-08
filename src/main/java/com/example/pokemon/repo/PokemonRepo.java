@@ -1,21 +1,17 @@
 package com.example.pokemon.repo;
 
-import com.example.pokemon.entity.LocalizedPkm;
 import com.example.pokemon.entity.PkmDetails;
 import com.example.pokemon.entity.Pokemon;
-import org.springframework.data.jpa.domain.Specification;
+import com.example.pokemon.repo.jqpl.constant.QueryParam;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.MapJoin;
 import java.util.List;
 import java.util.Optional;
 
-import static com.example.pokemon.repo.LocalizedPkmJPQL.*;
+import static com.example.pokemon.repo.jqpl.LocalizedPkmJPQL.GET_PKM_DETAILS2;
 
 /**
  * 29/08/2022.
@@ -23,24 +19,13 @@ import static com.example.pokemon.repo.LocalizedPkmJPQL.*;
  * @author Laurent Lamiral
  */
 @Repository
-public interface PokemonRepo extends JpaRepository<Pokemon, Long>, JpaSpecificationExecutor<Pokemon> {
-
-    static Specification<Pokemon> hasLang(final String langIso) {
-
-        return (pkm, cq, cb) -> {
-            final MapJoin<Pokemon, String, LocalizedPkm> localizedPkms = pkm.joinMap("localizedPkms");
-
-            pkm.fetch("localizedPkms", JoinType.LEFT);
-            return cb.equal(localizedPkms.key(),
-                    langIso);
-        };
-    }
+public interface PokemonRepo extends JpaRepository<Pokemon, Long> {
 
 
-    @Query(GET_PKM_DETAILS)
-    public List<PkmDetails> getInfos(@Param(PARAM_PKM_ID) final Long pkmId,
-                                     @Param(PARAM_GEN_NUM) final Long genNum,
-                                     @Param(PARAM_LANG_ID) final String langId);
+    @Query(GET_PKM_DETAILS2)
+    public List<PkmDetails> getInfos(@Param(QueryParam.PKM_ID) final Long pkmId,
+                                     @Param(QueryParam.GEN_NUM) final Long genNum,
+                                     @Param(QueryParam.LANG_ISO) final String[] langId);
 
 
     Optional<Pokemon> findByNumber(int number);

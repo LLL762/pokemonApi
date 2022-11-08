@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -52,6 +53,10 @@ public class Pokemon {
     private LocalDate created;
     private LocalDateTime lastEdit;
 
+
+    @ManyToOne(fetch = EAGER)
+    private Generation introducedInGen;
+
     @OneToMany(fetch = LAZY, mappedBy = "pokemon")
     @MapKey(name = "id.generationId")
     @ToString.Exclude
@@ -68,7 +73,6 @@ public class Pokemon {
         this.localizedPkms.put(localizedPkm.getId().getLangId(), localizedPkm);
         localizedPkm.setPokemon(this);
     }
-
 
     public void removeLocalizedPkm(final LocalizedPkm localizedPkm) {
 

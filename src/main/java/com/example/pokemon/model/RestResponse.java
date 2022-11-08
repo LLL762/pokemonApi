@@ -1,6 +1,7 @@
 package com.example.pokemon.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpMethod;
@@ -14,6 +15,7 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 @Data
 @SuperBuilder
 @JsonInclude(NON_NULL)
+@JsonView(AppJsonView.projection.class)
 public class RestResponse {
 
     protected LocalDateTime date;
